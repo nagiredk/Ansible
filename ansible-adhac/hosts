@@ -1,0 +1,8 @@
+[local]
+localhost
+
+[local:vars]
+ansible_connection=ssh
+ansible_user=ansible_user
+ansible_password=ansible_password
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'

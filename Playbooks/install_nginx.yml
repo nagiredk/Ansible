@@ -1,0 +1,16 @@
+---
+- name: Install and enable NGINX on RHEL 9
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Install NGINX
+      yum:
+        name: nginx
+        state: present
+
+    - name: Start and enable NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: yes
