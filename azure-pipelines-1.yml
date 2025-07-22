@@ -1,0 +1,19 @@
+trigger: none   # run manually
+
+pool:
+  vmImage: ubuntu-latest   # Microsoft-hosted agent
+
+steps:
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'ANSIBLE-VM_SC'   # your Service Connection name
+    runOptions: 'commands'
+    commands: |
+      echo "Updating packages..."
+      sudo yum install -y epel-release
+      echo "Installing Ansible..."
+      sudo yum install -y ansible
+      echo "Checking Ansible version..."
+      ansible --version
+    workingDirectory: '/home/azureuser'   # or your VM user's home dir
+  displayName: 'Install Ansible on RHEL VM'
