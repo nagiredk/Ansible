@@ -9,10 +9,7 @@ steps:
     sshEndpoint: 'ANSIBLE-VM_SC'   # your Service Connection name
     runOptions: 'commands'
     commands: |
-      echo "Updating packages..."
-      sudo yum install -y epel-release
-      echo "Installing Ansible..."
-      sudo yum install -y ansible
+      sudo yum install -y ansible-core
       echo "Checking Ansible version..."
       ansible --version
     workingDirectory: '/home/azureuser'   # or your VM user's home dir
