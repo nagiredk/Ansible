@@ -1,0 +1,25 @@
+trigger: none  # manual run
+
+pool:
+  vmImage: ubuntu-latest   # Microsoft-hosted agent
+
+steps:
+- checkout: self   # this pulls your GitHub repo to the agent
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'ANSIBLE-VM_SC'   # your SSH service connection
+    sourceFolder: 'Ansible/Playbooks'
+    contents: '**'
+    targetFolder: '/home/azureuser/ansible'   # where to place playbooks on VM
+  displayName: 'Copy Playbook & Inventory to VM'
+
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'ANSIBLE-VM_SC'
+    runOptions: 'commands'
+    commands: |
+      cd /home/azureuser/ansible
+      ansible-playbook -i hosts.ini install_nginx.yml
+    workingDirectory: '/home/azureuser/ansible'
+  displayName: 'Run Ansible Playbook on VM'
