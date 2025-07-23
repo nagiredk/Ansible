@@ -1,0 +1,30 @@
+trigger: none
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- checkout: self
+
+- script: |
+    echo "Listing workspace contents..."
+    ls -R $(Build.SourcesDirectory)
+  displayName: 'Debug: Check workspace files'
+
+- task: CopyFilesOverSSH@0
+  inputs:
+    sshEndpoint: 'ANSIBLE-VM_SC'
+    sourceFolder: '$(Build.SourcesDirectory)/Playbooks'
+    contents: '**'
+    targetFolder: '/home/azureuser/ansible'
+  displayName: 'Copy Playbook & Inventory to VM'
+
+- task: SSH@0
+  inputs:
+    sshEndpoint: 'ANSIBLE-VM_SC'
+    runOptions: 'inline'
+    inline: |
+      cd /home/azureuser/ansible
+      ansible-playbook -i hosts.ini install_nginx.yml
+    workingDirectory: '/home/azureuser/ansible'
+  displayName: 'Run Ansible Playbook on VM'
