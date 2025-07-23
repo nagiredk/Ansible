@@ -14,7 +14,7 @@ steps:
 - task: CopyFilesOverSSH@0
   inputs:
     sshEndpoint: 'ANSIBLE-VM_SC'
-    sourceFolder: '$(Build.SourcesDirectory)/Ansible/Playbooks'
+    sourceFolder: '$(Build.SourcesDirectory)/Playbooks'
     contents: '**'
     targetFolder: '/home/azureuser/ansible'
   displayName: 'Copy Playbook & Inventory to VM'
