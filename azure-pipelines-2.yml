@@ -22,7 +22,7 @@ steps:
 - task: SSH@0
   inputs:
     sshEndpoint: 'ANSIBLE-VM_SC'
-    runOptions: 'commands'
+    runOptions: 'inline'
     inline: |
       cd /home/azureuser/ansible
       ansible-playbook -i hosts.ini install_nginx.yml
